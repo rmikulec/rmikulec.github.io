@@ -9,7 +9,7 @@ npm run build
 
 Then the build files must be moved to the root directory
 
-```
+```bash
 mv ./build/* ../
 ```
 
