@@ -2,7 +2,7 @@
 "use client";
 import React, { useRef, useEffect, useState } from 'react';
 import { motion } from "framer-motion";
-import FullPageComponent from "@/components/ProjectCard";
+import ProjectCard from "@/components/ProjectCard";
 import { Parallax, Background } from 'react-parallax';
 import ScrollBasedBlueBackground  from '@/components/ParallaxEffect'
 import { Project, getPortfolioProjects } from './github';
@@ -87,11 +87,11 @@ export default function Home() {
             variants={sectionVariants}
             transition={{ delay: idx * 0.1 }}
           >
-            <FullPageComponent
+            <ProjectCard
               name={project.name}
               description={project.description}
               url={project.url}
-              orientation={idx % 2 === 0 ? "left" : "right"} 
+              orientation={idx % 2 === 0 ? "left" : "right"}
             />
           </motion.section>
         ))}
