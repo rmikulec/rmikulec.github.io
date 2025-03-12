@@ -18,16 +18,19 @@
     "framer-motion": "^12.5.0",
     "lucide-react": "^0.479.0",
     "next": "15.2.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "prop-types": "^15.8.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-parallax": "^3.5.1",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/prop-types": "^15.7.14",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "gh-pages": "^6.3.0",
     "tailwindcss": "^4",
     "typescript": "^5"
