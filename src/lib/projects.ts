@@ -10,9 +10,12 @@ export const projects = data as PortfolioProject[];
  * section is never empty.
  */
 export const featuredProjects: PortfolioProject[] = (() => {
-  const explicit = projects.filter((p) => p.featured != null);
+  // Archived projects are never featured in the carousel (they still appear in
+  // the full grid with an "Archived" badge).
+  const active = projects.filter((p) => p.status !== "archived");
+  const explicit = active.filter((p) => p.featured != null);
   if (explicit.length > 0) return explicit;
-  return projects.slice(0, Math.min(3, projects.length));
+  return active.slice(0, Math.min(3, active.length));
 })();
 
 /** Unique tags across all projects, sorted by frequency then name. */
