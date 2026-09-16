@@ -8,20 +8,23 @@ export default function ParallaxHero() {
   return (
     <ParallaxProvider>
       <header className="relative h-screen w-full overflow-hidden">
-        <ParallaxBanner
-          className="absolute inset-0 h-full w-full"
-          layers={[
-            { image: "/bg-1.jpg", speed: -20 },
-            { image: "/bg-2.png", speed: -12 },
-            { image: "/bg-3.png", speed: -6 },
-            { image: "/bg-4.png", speed: 4 },
-            { image: "/bg-5.png", speed: 10 },
-          ]}
-        />
+        {/* Background layer — kept out of normal flow so it can't push content down */}
+        <div className="absolute inset-0 z-0">
+          <ParallaxBanner
+            className="h-full w-full"
+            layers={[
+              { image: "/bg-1.jpg", speed: -20 },
+              { image: "/bg-2.png", speed: -12 },
+              { image: "/bg-3.png", speed: -6 },
+              { image: "/bg-4.png", speed: 4 },
+              { image: "/bg-5.png", speed: 10 },
+            ]}
+          />
+        </div>
         {/* darkening gradient so text is legible and the hero blends into content */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/30 to-slate-950" />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-slate-950/60 via-slate-950/40 to-slate-950" />
 
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center [text-shadow:0_2px_20px_rgba(2,6,23,0.7)]">
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}

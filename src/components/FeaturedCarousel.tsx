@@ -26,7 +26,7 @@ export default function FeaturedCarousel({ projects }: { projects: PortfolioProj
 
   return (
     <div
-      className="relative overflow-hidden rounded-3xl border border-white/10"
+      className="relative overflow-hidden"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -70,7 +70,7 @@ function FeaturedSlide({ project }: { project: PortfolioProject }) {
   const hasImages = images.length > 0;
 
   return (
-    <div className="relative h-[440px] w-full sm:h-[520px]">
+    <div className="relative h-[70vh] min-h-[480px] w-full sm:h-[78vh]">
       {/* media */}
       {hasImages ? (
         <img
@@ -97,7 +97,7 @@ function FeaturedSlide({ project }: { project: PortfolioProject }) {
       />
 
       {/* content */}
-      <div className="absolute inset-x-0 bottom-0 z-10 p-7 sm:p-10">
+      <div className="absolute inset-x-0 bottom-0 z-10 mx-auto w-full max-w-6xl px-6 pb-10 sm:px-10 sm:pb-14">
         <div className="flex items-center gap-3">
           <StatusBadge status={project.status} />
           {project.tags.slice(0, 4).map((tag) => (
@@ -112,12 +112,12 @@ function FeaturedSlide({ project }: { project: PortfolioProject }) {
         </div>
         <Link
           href={`/projects/${project.slug}`}
-          className="group mt-3 inline-flex items-center gap-2 text-3xl font-bold text-white sm:text-4xl"
+          className="group mt-4 inline-flex items-center gap-2 text-4xl font-bold text-white sm:text-6xl"
         >
           {project.name}
-          <ArrowUpRight className="size-6 opacity-0 transition-opacity group-hover:opacity-80" />
+          <ArrowUpRight className="size-7 opacity-0 transition-opacity group-hover:opacity-80" />
         </Link>
-        <p className="mt-2 max-w-2xl text-slate-200">{project.tagline}</p>
+        <p className="mt-3 max-w-2xl text-lg text-slate-200 sm:text-xl">{project.tagline}</p>
 
         <div className="mt-5 flex flex-wrap items-center gap-2">
           <Link
