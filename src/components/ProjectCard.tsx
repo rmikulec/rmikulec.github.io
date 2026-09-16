@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Github, ExternalLink, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { PortfolioProject } from "@/lib/portfolio";
 import { rgba } from "@/lib/color";
 import StatusBadge from "./StatusBadge";
+import ProjectLinks from "./ProjectLinks";
 
 type Props = {
   project: PortfolioProject;
@@ -78,24 +79,7 @@ export default function ProjectCard({ project, variant = "compact", onQuickView 
             Details
           </button>
         )}
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-slate-200 ring-1 ring-inset ring-white/15 transition-colors hover:bg-white/5"
-        >
-          <Github className="size-4" /> Code
-        </a>
-        {project.demo && (
-          <a
-            href={project.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-slate-200 ring-1 ring-inset ring-white/15 transition-colors hover:bg-white/5"
-          >
-            <ExternalLink className="size-4" /> Demo
-          </a>
-        )}
+        <ProjectLinks project={project} />
       </div>
     </article>
   );

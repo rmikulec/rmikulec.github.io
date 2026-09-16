@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Github, ExternalLink, ArrowUpRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import type { PortfolioProject } from "@/lib/portfolio";
 import { rgba } from "@/lib/color";
 import StatusBadge from "./StatusBadge";
+import ProjectLinks from "./ProjectLinks";
 
 export default function FeaturedCarousel({ projects }: { projects: PortfolioProject[] }) {
   const [current, setCurrent] = useState(0);
@@ -127,24 +128,7 @@ function FeaturedSlide({ project }: { project: PortfolioProject }) {
           >
             View project
           </Link>
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-semibold text-slate-100 ring-1 ring-inset ring-white/25 backdrop-blur-sm hover:bg-white/10"
-          >
-            <Github className="size-4" /> Code
-          </a>
-          {project.demo && (
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-semibold text-slate-100 ring-1 ring-inset ring-white/25 backdrop-blur-sm hover:bg-white/10"
-            >
-              <ExternalLink className="size-4" /> Demo
-            </a>
-          )}
+          <ProjectLinks project={project} />
         </div>
 
         {/* image thumbnails when a project has more than one */}

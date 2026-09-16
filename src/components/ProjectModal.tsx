@@ -3,11 +3,12 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Github, ExternalLink, Link as LinkIcon } from "lucide-react";
+import { X, Link as LinkIcon } from "lucide-react";
 import type { PortfolioProject } from "@/lib/portfolio";
 import { rgba } from "@/lib/color";
 import Markdown from "./Markdown";
 import StatusBadge from "./StatusBadge";
+import ProjectLinks from "./ProjectLinks";
 
 export default function ProjectModal({
   project,
@@ -82,25 +83,7 @@ export default function ProjectModal({
             </div>
 
             <footer className="flex flex-wrap items-center gap-2 border-t border-white/10 p-4">
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-white"
-                style={{ background: rgba(project.color, 0.9) }}
-              >
-                <Github className="size-4" /> View code
-              </a>
-              {project.demo && (
-                <a
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-slate-200 ring-1 ring-inset ring-white/15 hover:bg-white/5"
-                >
-                  <ExternalLink className="size-4" /> Live demo
-                </a>
-              )}
+              <ProjectLinks project={project} />
               <Link
                 href={`/projects/${project.slug}`}
                 className="ml-auto inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-slate-300 hover:text-white"

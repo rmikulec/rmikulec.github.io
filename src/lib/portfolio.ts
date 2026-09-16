@@ -36,7 +36,21 @@ export const ProjectSchema = z.object({
   images: z.array(z.string()).optional(),
   /** Backward-compatible alias for `images` used by older .portfolio files. */
   imageURLs: z.array(z.string()).optional(),
+  /**
+   * Whether the source repo is private. When true the "Code" link is hidden
+   * (it would 404 for visitors) — lean on `links` instead.
+   */
+  private: z.boolean().default(false),
+  /**
+   * Extra links (docs, PyPI, live site, demo video…). Especially useful for
+   * private projects where the code isn't publicly viewable.
+   */
+  links: z
+    .array(z.object({ label: z.string().min(1), url: z.string().url() }))
+    .default([]),
 });
+
+export type ProjectLink = { label: string; url: string };
 
 export type Project = z.infer<typeof ProjectSchema>;
 

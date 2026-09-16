@@ -14,6 +14,8 @@
     "color": "#6366f1",
     "featured": 2,
     "status": "active",
+    "private": false,
+    "links": [],
     "slug": "ada",
     "images": [
       "https://github.com/rmikulec/ada/assets/15821744/d3804f92-22d3-4da0-87b5-0234b29ce4bc",
@@ -35,6 +37,8 @@
     ],
     "color": "#14b8a6",
     "status": "active",
+    "private": false,
+    "links": [],
     "slug": "citimesh",
     "images": []
   }

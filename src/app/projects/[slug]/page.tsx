@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Github, ExternalLink } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { projects, getProject } from "@/lib/projects";
 import { rgba } from "@/lib/color";
 import Markdown from "@/components/Markdown";
 import StatusBadge from "@/components/StatusBadge";
+import ProjectLinks from "@/components/ProjectLinks";
 
 export const dynamicParams = false;
 
@@ -77,25 +78,7 @@ export default async function ProjectPage({
           )}
 
           <div className="mt-6 flex flex-wrap gap-2">
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-semibold text-white"
-              style={{ background: rgba(project.color, 0.9) }}
-            >
-              <Github className="size-4" /> View code
-            </a>
-            {project.demo && (
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-semibold text-slate-200 ring-1 ring-inset ring-white/15 hover:bg-white/5"
-              >
-                <ExternalLink className="size-4" /> Live demo
-              </a>
-            )}
+            <ProjectLinks project={project} />
           </div>
         </header>
 
