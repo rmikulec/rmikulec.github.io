@@ -1,6 +1,6 @@
 import { Github, Mail } from "lucide-react";
 import ParallaxHero from "@/components/ParallaxHero";
-import ProjectCard from "@/components/ProjectCard";
+import FeaturedCarousel from "@/components/FeaturedCarousel";
 import ProjectExplorer from "@/components/ProjectExplorer";
 import { projects, featuredProjects, allTags } from "@/lib/projects";
 
@@ -18,56 +18,15 @@ export default function Home() {
             into a repo and they’ll show up here.
           </p>
         ) : (
-          <>
-            {/* Featured */}
-            <section className="mb-24">
-              <SectionHeading
-                eyebrow="Featured"
-                title="Selected work"
-                subtitle="A few projects I'm most proud of."
-              />
-              <div className="grid gap-6 md:grid-cols-2">
-                {featuredProjects.map((project) => (
-                  <ProjectCard key={project.slug} project={project} variant="featured" />
-                ))}
-              </div>
-            </section>
-
-            {/* All projects + tag filter */}
-            <section>
-              <SectionHeading
-                eyebrow="Everything"
-                title="All projects"
-                subtitle="Filter by tech. Open any card for details, or visit the repo."
-              />
-              <ProjectExplorer projects={projects} tags={allTags} />
-            </section>
-          </>
+          <div className="space-y-20">
+            <FeaturedCarousel projects={featuredProjects} />
+            <ProjectExplorer projects={projects} tags={allTags} />
+          </div>
         )}
       </div>
 
       <Footer />
     </main>
-  );
-}
-
-function SectionHeading({
-  eyebrow,
-  title,
-  subtitle,
-}: {
-  eyebrow: string;
-  title: string;
-  subtitle: string;
-}) {
-  return (
-    <div className="mb-10">
-      <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-sky-400">
-        {eyebrow}
-      </p>
-      <h2 className="text-3xl font-bold text-white sm:text-4xl">{title}</h2>
-      <p className="mt-2 text-slate-400">{subtitle}</p>
-    </div>
   );
 }
 

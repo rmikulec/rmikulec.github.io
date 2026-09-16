@@ -32,6 +32,10 @@ export const ProjectSchema = z.object({
   featured: z.number().nullish(),
   /** Lifecycle badge. */
   status: z.enum(["active", "wip", "archived"]).default("active"),
+  /** Screenshots / images to show (esp. in the featured carousel). */
+  images: z.array(z.string()).optional(),
+  /** Backward-compatible alias for `images` used by older .portfolio files. */
+  imageURLs: z.array(z.string()).optional(),
 });
 
 export type Project = z.infer<typeof ProjectSchema>;
@@ -40,7 +44,11 @@ export type Project = z.infer<typeof ProjectSchema>;
  * A project enriched with a URL-safe slug derived from its name, used for the
  * static per-project detail routes (`/projects/[slug]`).
  */
-export type PortfolioProject = Project & { slug: string; tagline: string };
+export type PortfolioProject = Omit<Project, "imageURLs"> & {
+  slug: string;
+  tagline: string;
+  images: string[];
+};
 
 /** First meaningful line of a markdown string, stripped of `#`/list markers. */
 export function deriveTagline(description: string): string {
@@ -61,7 +69,13 @@ export function normalizeProject(project: Project): PortfolioProject {
     project.tagline?.trim() ||
     deriveTagline(project.description) ||
     project.name;
-  return { ...project, tagline, slug: slugify(project.name) };
+  const { imageURLs, images, ...rest } = project;
+  return {
+    ...rest,
+    tagline,
+    slug: slugify(project.name),
+    images: images ?? imageURLs ?? [],
+  };
 }
 
 export function slugify(name: string): string {

@@ -22,30 +22,22 @@ export default function ParallaxHero() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/30 to-slate-950" />
 
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-sky-300"
-          >
-            Ryan Mikulec
-          </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="max-w-3xl text-4xl font-bold leading-tight text-white sm:text-6xl"
+            transition={{ duration: 0.7 }}
+            className="text-5xl font-bold leading-tight text-white sm:text-7xl"
           >
-            I build tools that turn ideas into working software.
+            Ryan Mikulec
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-5 max-w-xl text-lg text-slate-300"
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="mt-5 max-w-2xl text-lg text-slate-200 sm:text-xl"
           >
-            Software engineer working across AI, backends, and the occasional
-            civic-tech experiment. A selection of my open-source work is below.
+            Software engineer building full-stack applications, backend systems,
+            and LLM-powered tools.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
