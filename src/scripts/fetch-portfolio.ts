@@ -39,7 +39,7 @@ async function listRepos(): Promise<Repo[]> {
   // Authenticated: /user/repos sees private repos too. Unauthenticated: fall
   // back to the public /users/:user/repos endpoint.
   const base = TOKEN
-    ? "https://api.github.com/user/repos?per_page=100&affiliation=owner&sort=updated"
+    ? "https://api.github.com/user/repos?per_page=100&affiliation=owner,collaborator,organization_member&sort=updated"
     : `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`;
 
   const repos: Repo[] = [];
