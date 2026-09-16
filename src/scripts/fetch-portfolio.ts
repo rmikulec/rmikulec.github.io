@@ -35,26 +35,60 @@ interface Repo {
   private: boolean;
 }
 
-async function listRepos(): Promise<Repo[]> {
-  // Authenticated: /user/repos sees private repos too. Unauthenticated: fall
-  // back to the public /users/:user/repos endpoint.
-  const base = TOKEN
-    ? "https://api.github.com/user/repos?per_page=100&affiliation=owner,collaborator,organization_member&sort=updated"
-    : `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`;
-
-  const repos: Repo[] = [];
+/** Fetch every page of a paginated list endpoint. */
+async function paginate<T>(baseUrl: string): Promise<T[]> {
+  const out: T[] = [];
   for (let page = 1; ; page++) {
-    const res = await fetch(`${base}&page=${page}`, { headers });
+    const sep = baseUrl.includes("?") ? "&" : "?";
+    const res = await fetch(`${baseUrl}${sep}per_page=100&page=${page}`, { headers });
     if (!res.ok) {
-      throw new Error(
-        `GitHub API error listing repos: ${res.status} ${res.statusText}`,
-      );
+      throw new Error(`${res.status} ${res.statusText}`);
     }
-    const batch = (await res.json()) as Repo[];
-    repos.push(...batch);
+    const batch = (await res.json()) as T[];
+    out.push(...batch);
     if (batch.length < 100) break;
   }
-  return repos;
+  return out;
+}
+
+async function listRepos(): Promise<Repo[]> {
+  // Unauthenticated: just the user's public repos.
+  if (!TOKEN) {
+    return paginate<Repo>(`https://api.github.com/users/${USERNAME}/repos?sort=updated`);
+  }
+
+  const byName = new Map<string, Repo>();
+  const add = (r: Repo) => byName.set(r.full_name, r);
+
+  // 1) Everything the token is directly affiliated with (owner, collaborator,
+  //    and repos in orgs the token can see).
+  (
+    await paginate<Repo>(
+      "https://api.github.com/user/repos?affiliation=owner,collaborator,organization_member&sort=updated",
+    )
+  ).forEach(add);
+
+  // 2) Also enumerate each org the user belongs to and list its repos directly.
+  //    This is a second path to org repos (e.g. ARRM-Studios) in case they were
+  //    missed above. A 403 here is the tell-tale sign the token lacks org access.
+  try {
+    const orgs = await paginate<{ login: string }>("https://api.github.com/user/orgs");
+    for (const org of orgs) {
+      try {
+        (
+          await paginate<Repo>(`https://api.github.com/orgs/${org.login}/repos?type=all`)
+        ).forEach(add);
+      } catch (e) {
+        console.warn(
+          `  ! could not list repos for org "${org.login}" (${(e as Error).message}) — the token may not have access to this org`,
+        );
+      }
+    }
+  } catch (e) {
+    console.warn(`  ! could not list your orgs (${(e as Error).message})`);
+  }
+
+  return [...byName.values()];
 }
 
 async function fetchPortfolio(fullName: string): Promise<PortfolioProject | null> {
