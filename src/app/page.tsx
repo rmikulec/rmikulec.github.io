@@ -1,101 +1,101 @@
-// pages/index.jsx (or your corresponding page file)
-"use client";
-import React, { useRef, useEffect, useState } from 'react';
-import { motion } from "framer-motion";
+import { Github, Mail } from "lucide-react";
+import ParallaxHero from "@/components/ParallaxHero";
 import ProjectCard from "@/components/ProjectCard";
-import { Parallax, Background } from 'react-parallax';
-import ScrollBasedBlueBackground  from '@/components/ParallaxEffect'
-import { Project, getPortfolioProjects } from './github';
-
-// Example list of projects
-// Reusable variants for section transitions
-const sectionVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
-};
+import ProjectExplorer from "@/components/ProjectExplorer";
+import { projects, featuredProjects, allTags } from "@/lib/projects";
 
 export default function Home() {
-  // Always call hooks at the top of the component.
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const scrollContainerRef = useRef(null); // Always call useRef here.
+  const hasProjects = projects.length > 0;
 
-  useEffect(() => {
-    const username = "rmikulec"; // Replace with your GitHub username
-    getPortfolioProjects(username)
-      .then((projects) => {
-        setProjects(projects);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching portfolio projects:", err);
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return <div>Loading projects...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-  console.log(projects);
   return (
-    <ScrollBasedBlueBackground containerRef={scrollContainerRef}>
-      <main
-        ref={scrollContainerRef}
-        className="relative h-screen overflow-y-scroll snap-y snap-mandatory"
-      >
-        {/* ABOUT SECTION */}
-        <motion.section
-          className="h-screen snap-start flex items-center justify-center px-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={sectionVariants}
-        >
-          <div className="max-w-3xl text-center space-y-4">
-          <h3 className="text-5xl text-red-700 font-bold tracking-tight">
-            Under Development, please come back later!
+    <main className="relative">
+      <ParallaxHero />
 
-            </h3>
-            <h1 className="text-5xl text-gray-300 font-bold tracking-tight">
-              Ryan Mikulec
-            </h1>
+      <div id="projects" className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+        {!hasProjects ? (
+          <p className="text-center text-slate-400">
+            No projects yet — drop a <code className="text-sky-300">.portfolio</code> file
+            into a repo and they’ll show up here.
+          </p>
+        ) : (
+          <>
+            {/* Featured */}
+            <section className="mb-24">
+              <SectionHeading
+                eyebrow="Featured"
+                title="Selected work"
+                subtitle="A few projects I'm most proud of."
+              />
+              <div className="grid gap-6 md:grid-cols-2">
+                {featuredProjects.map((project) => (
+                  <ProjectCard key={project.slug} project={project} variant="featured" />
+                ))}
+              </div>
+            </section>
 
-            <p className="text-lg text-gray-200">
-              LLM-backed Open Source projects designed to be help anyone, with the only requirement being an OpenAI API Key.
-            </p>
-          </div>
-        </motion.section>
+            {/* All projects + tag filter */}
+            <section>
+              <SectionHeading
+                eyebrow="Everything"
+                title="All projects"
+                subtitle="Filter by tech. Open any card for details, or visit the repo."
+              />
+              <ProjectExplorer projects={projects} tags={allTags} />
+            </section>
+          </>
+        )}
+      </div>
 
-        {/* PROJECT SECTIONS */}
-        {projects.map((project, idx) => (
-          <motion.section
-            key={project.name}
-            className="h-screen snap-start flex items-center justify-center px-2"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.7 }}
-            variants={sectionVariants}
-            transition={{ delay: idx * 0.1 }}
+      <Footer />
+    </main>
+  );
+}
+
+function SectionHeading({
+  eyebrow,
+  title,
+  subtitle,
+}: {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+}) {
+  return (
+    <div className="mb-10">
+      <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-sky-400">
+        {eyebrow}
+      </p>
+      <h2 className="text-3xl font-bold text-white sm:text-4xl">{title}</h2>
+      <p className="mt-2 text-slate-400">{subtitle}</p>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-white/10">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-10 sm:flex-row">
+        <p className="text-sm text-slate-400">
+          © Ryan Mikulec — built from{" "}
+          <code className="text-slate-300">.portfolio</code> files across my repos.
+        </p>
+        <div className="flex items-center gap-4">
+          <a
+            href="https://github.com/rmikulec"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm text-slate-300 hover:text-white"
           >
-            <ProjectCard
-              name={project.name}
-              description={project.description}
-              url={project.url}
-              orientation={idx % 2 === 0 ? "left" : "right"}
-            />
-          </motion.section>
-        ))}
-      </main>
-    </ScrollBasedBlueBackground>
+            <Github className="size-4" /> GitHub
+          </a>
+          <a
+            href="mailto:rmikulec.dev@gmail.com"
+            className="inline-flex items-center gap-1.5 text-sm text-slate-300 hover:text-white"
+          >
+            <Mail className="size-4" /> Email
+          </a>
+        </div>
+      </div>
+    </footer>
   );
 }

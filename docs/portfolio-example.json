@@ -1,0 +1,11 @@
+{
+  "name": "CitiMesh",
+  "tagline": "SMS-based civic info for local communities",
+  "description": "## What it does\nCitiMesh is an SMS-based chat system designed to serve citizens information about their communities.\n\n## Why\nNot everyone has a smartphone or reliable data. SMS reaches everyone.\n\n## Stack\nPython, Twilio, FastAPI.",
+  "url": "https://github.com/rmikulec/CitiMesh",
+  "demo": null,
+  "tags": ["python", "twilio", "fastapi"],
+  "color": "#0066cc",
+  "featured": 1,
+  "status": "active"
+}

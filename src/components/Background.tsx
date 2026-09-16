@@ -1,37 +1,20 @@
-"use client";
-import { motion, useScroll, useTransform } from "framer-motion";
-
-// Define the array of blue shades
-const blueShades = [
-  "#001f3f",
-  "#003366",
-  "#004080",
-  "#004c99",
-  "#0059b3",
-  "#0066cc",
-  "#0073e6",
-  "#0080ff",
-];
-
-export default function BlueBackground() {
-  const { scrollY, scrollYProgress } = useScroll();
-
-  // Create a parallax effect: the background moves upward at 20% of the scroll speed
-  const y = useTransform(scrollY, [0, 1000], [0, -200]);
-
-  // Create a color transition effect using the normalized scroll progress.
-  // The input range is split into eight equal segments (0 to 1/7, 1/7 to 2/7, …, 6/7 to 1),
-  // each mapping to a corresponding shade in the blueShades array.
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 1/7, 2/7, 3/7, 4/7, 5/7, 6/7, 1],
-    blueShades
-  );
-
+/**
+ * Fixed, full-page background: a deep navy → blue gradient with two soft glow
+ * blobs. Pure CSS (no JS/scroll listeners) so it's rock-solid under static
+ * export and sits behind every section. Refines the original blue theme.
+ */
+export default function Background() {
   return (
-    <motion.div
-      style={{ y, backgroundColor }}
-      className="fixed inset-0 -z-10"
-    />
+    <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-slate-950">
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(1200px 800px at 70% -10%, rgba(14,165,233,0.18), transparent 60%)," +
+            "radial-gradient(1000px 700px at 10% 110%, rgba(37,99,235,0.16), transparent 60%)," +
+            "linear-gradient(180deg, #020617 0%, #030b26 40%, #020617 100%)",
+        }}
+      />
+    </div>
   );
 }

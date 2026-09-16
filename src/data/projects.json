@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Ada",
+    "description": "A GPT-driven science explainer! \n Ask any question and have an article answering your question generated in minutes. View any sources in the sidebar to learn more.",
+    "url": "https://github.com/rmikulec/ada",
+    "tags": [],
+    "color": "#0066cc",
+    "status": "active",
+    "tagline": "A GPT-driven science explainer!",
+    "slug": "ada"
+  },
+  {
+    "name": "CitiMesh",
+    "description": "A SMS-based chat system designed to serve citizens information about their communities.",
+    "url": "https://github.com/rmikulec/CitiMesh",
+    "tags": [],
+    "color": "#0066cc",
+    "status": "active",
+    "tagline": "A SMS-based chat system designed to serve citizens information about their communities.",
+    "slug": "citimesh"
+  }
+]
