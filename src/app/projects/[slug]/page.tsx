@@ -7,6 +7,7 @@ import { rgba } from "@/lib/color";
 import Markdown from "@/components/Markdown";
 import StatusBadge from "@/components/StatusBadge";
 import ProjectLinks from "@/components/ProjectLinks";
+import ImageGallery from "@/components/ImageGallery";
 
 export const dynamicParams = false;
 
@@ -81,6 +82,12 @@ export default async function ProjectPage({
             <ProjectLinks project={project} />
           </div>
         </header>
+
+        {project.images.length > 0 && (
+          <div className="mt-10">
+            <ImageGallery images={project.images} />
+          </div>
+        )}
 
         <div className="mt-10 border-t border-white/10 pt-8">
           {project.description ? (
