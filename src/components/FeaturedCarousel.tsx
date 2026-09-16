@@ -80,14 +80,36 @@ function FeaturedSlide({ project }: { project: PortfolioProject }) {
           className="absolute inset-0 h-full w-full object-cover"
         />
       ) : (
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              `radial-gradient(120% 120% at 80% 0%, ${rgba(project.color, 0.55)}, transparent 60%),` +
-              `linear-gradient(135deg, ${rgba(project.color, 0.35)}, #020617)`,
-          }}
-        />
+        <>
+          {/* Designed backdrop for projects without a screenshot (e.g. libraries) */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                `radial-gradient(120% 120% at 85% -10%, ${rgba(project.color, 0.6)}, transparent 55%),` +
+                `radial-gradient(90% 90% at 0% 110%, ${rgba(project.color, 0.35)}, transparent 60%),` +
+                `linear-gradient(135deg, ${rgba(project.color, 0.32)}, #020617 72%)`,
+            }}
+          />
+          {/* dot-grid texture */}
+          <div
+            className="absolute inset-0 opacity-[0.12]"
+            style={{
+              backgroundImage:
+                "radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)",
+              backgroundSize: "22px 22px",
+            }}
+          />
+          {/* large monogram watermark */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-end overflow-hidden pr-[5%]">
+            <span
+              className="select-none font-black leading-none text-white/10"
+              style={{ fontSize: "44vh" }}
+            >
+              {project.name.trim().charAt(0)}
+            </span>
+          </div>
+        </>
       )}
       {/* legibility gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
